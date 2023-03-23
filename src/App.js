@@ -1,9 +1,10 @@
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import AppRouter from "./router/AppRouter";
-import { grey, blueGrey } from "@mui/material/colors";
-import { Provider } from "react-redux";
-import store from "./app/store";
-import { ToastContainer } from "react-toastify";
+import { createTheme, ThemeProvider } from "@mui/material/styles"
+import AppRouter from "./router/AppRouter"
+import { grey, blueGrey } from "@mui/material/colors"
+import { Provider } from "react-redux"
+import store, { persistor } from "./app/store"
+import { ToastContainer } from "react-toastify"
+import { PersistGate } from "redux-persist/integration/react"
 
 function App() {
   const theme = createTheme({
@@ -15,17 +16,19 @@ function App() {
         main: blueGrey["900"],
       },
     },
-  });
+  })
   return (
     <>
       <ThemeProvider theme={theme}>
         <Provider store={store}>
-          <AppRouter />
+          <PersistGate loading={null} persistor={persistor}>
+            <AppRouter />
+          </PersistGate>
         </Provider>
         <ToastContainer />
       </ThemeProvider>
     </>
-  );
+  )
 }
 
-export default App;
+export default App
