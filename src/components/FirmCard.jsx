@@ -3,15 +3,13 @@ import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-
 import Typography from "@mui/material/Typography";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditIcon from "@mui/icons-material/Edit";
 import { btnStyle, flex } from "../styles/globalStyle";
 import useStockCall from "../hooks/useStockCall";
-import { Scale } from "@mui/icons-material";
 
-export default function FirmCard({ firm }) {
+export default function FirmCard({ firm, setOpen, setInfo }) {
   const { deleteStockData } = useStockCall();
   // kartı silme işlemi için deletestockdata yı import ettik.
 
@@ -51,7 +49,13 @@ export default function FirmCard({ firm }) {
         Phone: {firm?.phone}
       </Typography>
       <CardActions sx={flex}>
-        <EditIcon sx={btnStyle} />
+      <EditIcon
+          sx={btnStyle}
+          onClick={() => {
+            setOpen(true)
+            setInfo(firm)
+          }}
+        />
         <DeleteOutlineIcon
           sx={btnStyle}
           onClick={() => deleteStockData("firms", firm.id)}
