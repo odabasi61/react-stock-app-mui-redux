@@ -1,28 +1,33 @@
-import Box from "@mui/material/Box"
-import Button from "@mui/material/Button"
-import TextField from "@mui/material/TextField"
-import { Form } from "formik"
-import { object, string } from "yup"
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import { Form } from "formik";
+import { object, string } from "yup";
 
 export const registerSchema = object({
   username: string()
-    .max(10, "Kullanıcı adı 10 karakterden az olmalıdır.")
+    .max(10, "Username length must be maximum 10 characters!")
     .required(),
-  first_name: string().max(20, "İsim 20 karakterden az olmalıdır.").required(),
+  first_name: string()
+    .max(20, "Name should be less than 20 characters!")
+    .required(),
   last_name: string()
-    .max(20, "Soyisim 30 karakterden az olmalıdır.")
+    .max(20, "Last name should be less than 20 characters!")
     .required(),
 
   email: string().email().required(),
   password: string()
-    .required("password zorunludur")
-    .min(8, "password en az 8 karakter olmalıdır")
-    .max(20, "password en fazla 20 karakter olmalıdır")
-    .matches(/\d+/, "Password bir sayı içermelidir")
-    .matches(/[a-z]/, "Password bir küçük harf içermelidir")
-    .matches(/[A-Z]/, "Password bir büyük harf içermelidir")
-    .matches(/[!,?{}><%&$#£+-.]+/, "Password bir özel karakter içermelidir"),
-})
+    .required("Password is required!")
+    .min(8, "Password must contain at least 8 characters!")
+    .max(20, "Password cannot be more than 20 characters!")
+    .matches(/\d+/, "Password must contain a number!")
+    .matches(/[a-z]/, "Password must contain a lowercase letter!")
+    .matches(/[A-Z]/, "Password must contain an uppercase letter!")
+    .matches(
+      /[!,?{}><%&$#£+-.]+/,
+      "Password must contain a special character!"
+    ),
+});
 
 const SignUpForm = ({ values, handleChange, errors, touched, handleBlur }) => {
   return (
@@ -95,7 +100,7 @@ const SignUpForm = ({ values, handleChange, errors, touched, handleBlur }) => {
         </Box>
       </Form>
     </div>
-  )
-}
+  );
+};
 
-export default SignUpForm
+export default SignUpForm;

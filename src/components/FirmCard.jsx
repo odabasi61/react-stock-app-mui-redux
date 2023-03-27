@@ -9,12 +9,15 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditIcon from "@mui/icons-material/Edit";
 import { btnStyle, flex } from "../styles/globalStyle";
 import useStockCall from "../hooks/useStockCall";
+import { Scale } from "@mui/icons-material";
 
 export default function FirmCard({ firm }) {
   const { deleteStockData } = useStockCall();
+  // kartı silme işlemi için deletestockdata yı import ettik.
 
   return (
     <Card
+      elevation={5}
       sx={{
         p: 2,
         width: "300px",
@@ -22,6 +25,11 @@ export default function FirmCard({ firm }) {
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
+        transition: "all .4s ease",
+        ":hover": {
+          transform: "translateY(-5px)",
+          cursor: "pointer",
+        },
       }}
     >
       <CardContent>

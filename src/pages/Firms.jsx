@@ -6,6 +6,8 @@ import FirmCard from "../components/FirmCard";
 import useStockCall from "../hooks/useStockCall";
 import { flex } from "../styles/globalStyle";
 
+// firma api çekme işlemini birden çok yerde kullanacağımız için (mesela purchases) usestockcall isimli hook oluşturduk. ve aşağıdaki fetch işlemlerini oraya taşıyıp ordan tekrar buraya çağırdık.
+
 // import axios from "axios"
 // import { useDispatch, useSelector } from "react-redux"
 // import { fetchFail, getSuccess, fetchStart } from "../features/stockSlice"
@@ -21,6 +23,7 @@ const Firms = () => {
   //   try {
   //     const { data } = await axios(`${BASE_URL}stock/firms/`, {
   //       headers: { Authorization: `Token ${token}` },
+  //       postman de yaptığımız authorization işlemleri. header kısmında yapılıyor. hem post hem get işleminde yapıyoruz. post/auth girişi yaparken token verir.
   //     })
   //     dispatch(getSuccess({ data, url }))
   //   } catch (error) {
@@ -42,10 +45,12 @@ const Firms = () => {
   return (
     <div>
       <Typography variant="h4" color="error" mb={3}>
-        Firm
+        Firms
       </Typography>
 
-      <Button variant="contained">New Firm</Button>
+      <Button sx={{ mb: 2 }} variant="contained">
+        New Firm
+      </Button>
 
       <Grid container sx={flex}>
         {firms?.map((firm) => (

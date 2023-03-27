@@ -1,29 +1,32 @@
-import Box from "@mui/material/Box"
-import TextField from "@mui/material/TextField"
-import LoadingButton from "@mui/lab/LoadingButton"
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import LoadingButton from "@mui/lab/LoadingButton";
 
-import { Form } from "formik"
-import { useSelector } from "react-redux"
-import { object, string } from "yup"
+import { Form } from "formik";
+import { useSelector } from "react-redux";
+import { object, string } from "yup";
 
- // burası yup ile gelen hazır yapıdır. yup import edilirken object ve string de import edildi. burada hazır olmaları gerekir. email ve password string olduğu için onları çağırdık. sayısal değeri olan birşey olsa number import edip burada kullanmalıydık. ya da tarih olursa date. resmi sitesinde detaylı açıklıyor. değişken ismini biz belirledik (loginscheme)
+// burası yup ile gelen hazır yapıdır. yup import edilirken object ve string de import edildi. burada hazır olmaları gerekir. email ve password string olduğu için onları çağırdık. sayısal değeri olan birşey olsa number import edip burada kullanmalıydık. ya da tarih olursa date. resmi sitesinde detaylı açıklıyor. değişken ismini biz belirledik (loginscheme)
 export const loginScheme = object({
   email: string()
-    .email("Lutfen valid bir email giriniz")
-    .required("Email zorunludur"),
+    .email("Please enter a valid email!")
+    .required("Email is required!"),
   password: string()
-    .required("password zorunludur")
-    .min(8, "password en az 8 karakter olmalıdır")
-    .max(20, "password en fazla 20 karakter olmalıdır")
-    .matches(/\d+/, "Password bir sayı içermelidir")
-    .matches(/[a-z]/, "Password bir küçük harf içermelidir")
-    .matches(/[A-Z]/, "Password bir büyük harf içermelidir")
-    .matches(/[!,?{}><%&$#£+-.]+/, "Password bir özel karakter içermelidir"),
-})
+    .required("Password is required!")
+    .min(8, "Password must contain at least 8 characters!")
+    .max(20, "Password cannot be more than 20 characters!")
+    .matches(/\d+/, "Password must contain a number!")
+    .matches(/[a-z]/, "Password must contain a lowercase letter!")
+    .matches(/[A-Z]/, "Password must contain an uppercase letter!")
+    .matches(
+      /[!,?{}><%&$#£+-.]+/,
+      "Password must contain a special character!"
+    ),
+});
 
 // login.js deki formikten gelen probu burda destructure ettik.
 const LoginForm = ({ values, handleChange, errors, touched, handleBlur }) => {
-  const { loading } = useSelector((state) => state.auth)
+  const { loading } = useSelector((state) => state.auth);
   return (
     <Form>
       <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
@@ -66,7 +69,7 @@ const LoginForm = ({ values, handleChange, errors, touched, handleBlur }) => {
         </LoadingButton>
       </Box>
     </Form>
-  )
-}
+  );
+};
 
-export default LoginForm
+export default LoginForm;

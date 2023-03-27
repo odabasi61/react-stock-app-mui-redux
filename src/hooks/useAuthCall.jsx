@@ -29,7 +29,7 @@ const useAuthCall = () => {
       );
       // loginsuccess authslicedaki reducerdan geliyor
       dispatch(loginSuccess(data));
-      toastSuccessNotify("Login performed");
+      toastSuccessNotify("Successfully logged in");
       navigate("/stock");
       console.log(data);
     } catch (error) {
@@ -44,7 +44,7 @@ const useAuthCall = () => {
     try {
       await axios.post(`${BASE_URL}account/auth/logout/`);
       dispatch(logoutSuccess());
-      toastSuccessNotify("Logout performed");
+      toastSuccessNotify("Successfully logged out");
       navigate("/");
     } catch (err) {
       dispatch(fetchFail());
@@ -60,7 +60,7 @@ const useAuthCall = () => {
         userInfo
       );
       dispatch(registerSuccess(data));
-      toastSuccessNotify("Register performed");
+      toastSuccessNotify("Successfully registered");
       navigate("/stock");
     } catch (err) {
       dispatch(fetchFail());
