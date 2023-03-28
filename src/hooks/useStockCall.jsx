@@ -46,30 +46,30 @@ const useStockCall = () => {
 
   // burada post işlemi yapıyoruz. yeni firma ekleme kısmı. bilgi gittiği için parametre ekliyoruz. parametreye info dedik.
   const postStockData = async (url, info) => {
-    dispatch(fetchStart())
+    dispatch(fetchStart());
     try {
-      await axiosWithToken.post(`stock/${url}/`, info)
-      toastSuccessNotify(`${url} successfuly posted`)
-      getStockData(url)
+      await axiosWithToken.post(`stock/${url}/`, info);
+      toastSuccessNotify(`${url} successfuly added`);
+      getStockData(url);
     } catch (error) {
-      console.log(error)
-      dispatch(fetchFail())
-      toastErrorNotify(`${url} can not be posted`)
+      console.log(error);
+      dispatch(fetchFail());
+      toastErrorNotify(`${url} can not be added`);
     }
-  }
+  };
 
   const putStockData = async (url, info) => {
-    dispatch(fetchStart())
+    dispatch(fetchStart());
     try {
-      await axiosWithToken.put(`stock/${url}/${info.id}/`, info)
-      toastSuccessNotify(`${url} successfuly updated`)
-      getStockData(url)
+      await axiosWithToken.put(`stock/${url}/${info.id}/`, info);
+      toastSuccessNotify(`${url} info successfuly updated`);
+      getStockData(url);
     } catch (error) {
-      console.log(error)
-      dispatch(fetchFail())
-      toastErrorNotify(`${url} can not be updated`)
+      console.log(error);
+      dispatch(fetchFail());
+      toastErrorNotify(`${url} info cannot be updated`);
     }
-  }
+  };
 
   return { getStockData, deleteStockData, postStockData, putStockData };
 };

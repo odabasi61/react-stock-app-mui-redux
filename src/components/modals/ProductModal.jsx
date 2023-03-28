@@ -6,18 +6,10 @@ import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
 import useStockCall from "../../hooks/useStockCall";
 
-export default function FirmModal({ open, handleClose, info, setInfo }) {
-  // const [info, setInfo] = useState({
-  //   name: "",
-  //   phone: "",
-  //   address: "",
-  //   image: "",
-  // })
-
+export default function ProductModal({ open, handleClose, info, setInfo }) {
   const { postStockData, putStockData } = useStockCall();
 
   const handleChange = (e) => {
-    // burada form gönderirken gönderilecek bilgiler için handlechange fonksiyonu yazdık. e.target kısmını destructure yaptık ve name ve value çıkarttık. setinfo ile ayarlama yaparken her bir kısım için (name, phone, address, image) değişken olarak [name] değer olarak da value yazdık.
     const { name, value } = e.target;
     setInfo({ ...info, [name]: value });
   };
@@ -25,15 +17,14 @@ export default function FirmModal({ open, handleClose, info, setInfo }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (info.id) {
-      putStockData("firms", info);
+      putStockData("products", info);
     } else {
-      postStockData("firms", info);
+      postStockData("products", info);
     }
 
     handleClose();
     setInfo({ name: "", phone: "", address: "", image: "" });
   };
-  // console.log(info)
 
   return (
     <div>
@@ -52,7 +43,6 @@ export default function FirmModal({ open, handleClose, info, setInfo }) {
             component="form"
             onSubmit={handleSubmit}
           >
-            {/* burada boxa form özelliği verdik submit yapabilmesi için */}
             <TextField
               label="Firm Name"
               name="name"
