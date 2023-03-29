@@ -1,38 +1,103 @@
-import { Button } from "@mui/material";
-import Typography from "@mui/material/Typography";
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { Button } from "@mui/material"
+import Typography from "@mui/material/Typography"
+import { useEffect, useState } from "react"
+import { useSelector } from "react-redux"
 
-import ProductModal from "../components/modals/ProductModal";
-import useStockCall from "../hooks/useStockCall";
+import ProductModal from "../components/modals/ProductModal"
+import useStockCall from "../hooks/useStockCall"
 
-import * as React from "react";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
+import * as React from "react"
+import Box from "@mui/material/Box"
+import { DataGrid, GridActionsCellItem, GridToolbar } from "@mui/x-data-grid"
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever"
+import { btnStyle } from "../styles/globalStyle"
 
 const Products = () => {
-  const { getStockData } = useStockCall();
-  const { products } = useSelector((state) => state.stock);
-  const [open, setOpen] = useState(false);
+  const { getStockData, deleteStockData, getProCatBrand } = useStockCall()
+  const { products } = useSelector((state) => state.stock)
+  const [open, setOpen] = useState(false)
 
   const [info, setInfo] = useState({
+    category_id: "",
+    brand_id: "",
     name: "",
-    phone: "",
-    address: "",
-    image: "",
-  });
+  })
 
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleOpen = () => setOpen(true)
+
+  const handleClose = () => setOpen(false)
+
+  const columns = [
+    {
+      field: "id",
+      headerName: "#",
+      minWidth: 40,
+      maxWidth: 70,
+      flex: 1,
+      headerAlign: "center",
+      align: "center",
+    },
+    {
+      field: "category",
+      headerName: "Category",
+      headerAlign: "center",
+      align: "center",
+      flex: 3,
+      minWidth: 150,
+    },
+    {
+      field: "brand",
+      headerName: "Brand",
+      minWidth: 150,
+      headerAlign: "center",
+      align: "center",
+      flex: 2,
+    },
+    {
+      field: "name",
+      headerName: "Name",
+      type: "number",
+      headerAlign: "center",
+      align: "center",
+      minWidth: 150,
+      flex: 2,
+    },
+
+    {
+      field: "stock",
+      headerName: "Stock",
+      minWidth: 100,
+      headerAlign: "center",
+      align: "center",
+      flex: 0.7,
+    },
+    {
+      field: "actions",
+      headerName: "Actions",
+      type: "number",
+      headerAlign: "center",
+      align: "center",
+      minWidth: 50,
+      flex: 1,
+      renderCell: ({ id }) => (
+        <GridActionsCellItem
+          icon={<DeleteForeverIcon />}
+          label="Delete"
+          sx={btnStyle}
+          onClick={() => deleteStockData("products", id)}
+        />
+      ),
+    },
+  ]
 
   useEffect(() => {
-    getStockData("products");
-  }, []);
+    // getStockData("products")
+    // getStockData("categories")
+    // getStockData("brands")
+
+    //! Promise All
+    getProCatBrand()
+  }, [])
 
   return (
     <div>
@@ -40,7 +105,7 @@ const Products = () => {
         Products
       </Typography>
 
-      <Button sx={{ mb: 2 }} variant="contained" onClick={handleOpen}>
+      <Button variant="contained" onClick={handleOpen}>
         New Product
       </Button>
 
@@ -51,39 +116,25 @@ const Products = () => {
         setInfo={setInfo}
       />
 
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell align="right">#</TableCell>
-              <TableCell align="right">Category</TableCell>
-              <TableCell align="right">Brand</TableCell>
-              <TableCell align="right">Name</TableCell>
-              <TableCell align="right">Stock</TableCell>
-              <TableCell align="right">Operation</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {products?.map((pro, index) => (
-              <TableRow
-                key={pro.id}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell component="th" scope="row" align="right">
-                  {index + 1}
-                </TableCell>
-                <TableCell align="right">{pro.category}</TableCell>
-                <TableCell align="right">{pro.brand}</TableCell>
-                <TableCell align="right">{pro.name}</TableCell>
-                <TableCell align="right">{pro.stock}</TableCell>
-                <TableCell align="right"></TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <Box sx={{ width: "100%", marginTop: "1rem" }}>
+        <DataGrid
+          autoHeight
+          rows={products}
+          columns={columns}
+          initialState={{
+            pagination: {
+              paginationModel: {
+                pageSize: 5,
+              },
+            },
+          }}
+          pageSizeOptions={[5]}
+          disableRowSelectionOnClick
+          slots={{ toolbar: GridToolbar }}
+        />
+      </Box>
     </div>
-  );
-};
+  )
+}
 
-export default Products;
+export default Products
