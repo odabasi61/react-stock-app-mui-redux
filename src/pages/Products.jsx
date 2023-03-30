@@ -1,31 +1,29 @@
-import { Button } from "@mui/material"
-import Typography from "@mui/material/Typography"
-import { useEffect, useState } from "react"
-import { useSelector } from "react-redux"
-
-import ProductModal from "../components/modals/ProductModal"
-import useStockCall from "../hooks/useStockCall"
-
-import * as React from "react"
-import Box from "@mui/material/Box"
-import { DataGrid, GridActionsCellItem, GridToolbar } from "@mui/x-data-grid"
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever"
-import { btnStyle } from "../styles/globalStyle"
+import { Button } from "@mui/material";
+import Typography from "@mui/material/Typography";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import ProductModal from "../components/modals/ProductModal";
+import useStockCall from "../hooks/useStockCall";
+import * as React from "react";
+import Box from "@mui/material/Box";
+import { DataGrid, GridActionsCellItem, GridToolbar } from "@mui/x-data-grid";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import { btnStyle } from "../styles/globalStyle";
 
 const Products = () => {
-  const { getStockData, deleteStockData, getProCatBrand } = useStockCall()
-  const { products } = useSelector((state) => state.stock)
-  const [open, setOpen] = useState(false)
+  const { deleteStockData, getProCatBrand } = useStockCall();
+  const { products } = useSelector((state) => state.stock);
+  const [open, setOpen] = useState(false);
 
   const [info, setInfo] = useState({
     category_id: "",
     brand_id: "",
     name: "",
-  })
+  });
 
-  const handleOpen = () => setOpen(true)
+  const handleOpen = () => setOpen(true);
 
-  const handleClose = () => setOpen(false)
+  const handleClose = () => setOpen(false);
 
   const columns = [
     {
@@ -88,7 +86,7 @@ const Products = () => {
         />
       ),
     },
-  ]
+  ];
 
   useEffect(() => {
     // getStockData("products")
@@ -96,8 +94,8 @@ const Products = () => {
     // getStockData("brands")
 
     //! Promise All
-    getProCatBrand()
-  }, [])
+    getProCatBrand();
+  }, []); // eslint-disable-line
 
   return (
     <div>
@@ -121,20 +119,16 @@ const Products = () => {
           autoHeight
           rows={products}
           columns={columns}
-          initialState={{
-            pagination: {
-              paginationModel: {
-                pageSize: 5,
-              },
-            },
-          }}
-          pageSizeOptions={[5]}
+          pageSize={10}
           disableRowSelectionOnClick
           slots={{ toolbar: GridToolbar }}
+          sx={{
+            boxShadow: 4,
+          }}
         />
       </Box>
     </div>
-  )
-}
+  );
+};
 
-export default Products
+export default Products;

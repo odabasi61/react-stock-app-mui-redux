@@ -1,36 +1,36 @@
-import React from "react"
-import { flexColumn, modalStyle } from "../../styles/globalStyle"
-import Box from "@mui/material/Box"
-import Button from "@mui/material/Button"
-import Modal from "@mui/material/Modal"
-import TextField from "@mui/material/TextField"
-import useStockCall from "../../hooks/useStockCall"
+import React from "react";
+import { flexColumn, modalStyle } from "../../styles/globalStyle";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Modal from "@mui/material/Modal";
+import TextField from "@mui/material/TextField";
+import useStockCall from "../../hooks/useStockCall";
 
 export default function BrandModal({ open, setOpen, info, setInfo }) {
-  const { postStockData, putStockData } = useStockCall()
+  const { postStockData, putStockData } = useStockCall();
 
   const handleChange = (e) => {
-    e.preventDefault()
-    const { name, value } = e.target
-    setInfo({ ...info, [name]: value })
-  }
+    e.preventDefault();
+    const { name, value } = e.target;
+    setInfo({ ...info, [name]: value });
+  };
   const handleSubmit = (e) => {
-    e.preventDefault()
-    setOpen(false)
+    e.preventDefault();
+    setOpen(false);
     if (info.id) {
-      putStockData("brands", info)
+      putStockData("brands", info);
     } else {
-      postStockData("brands", info)
+      postStockData("brands", info);
     }
-    setInfo({})
-  }
+    setInfo({});
+  };
 
   return (
     <Modal
       open={open}
       onClose={() => {
-        setOpen(false)
-        setInfo({})
+        setOpen(false);
+        setInfo({});
       }}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
@@ -64,5 +64,5 @@ export default function BrandModal({ open, setOpen, info, setInfo }) {
         </Box>
       </Box>
     </Modal>
-  )
+  );
 }

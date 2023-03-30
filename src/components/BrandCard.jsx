@@ -1,15 +1,15 @@
-import * as React from "react"
-import Card from "@mui/material/Card"
-import CardActions from "@mui/material/CardActions"
-import CardMedia from "@mui/material/CardMedia"
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline"
-import EditIcon from "@mui/icons-material/Edit"
-import { CardHeader } from "@mui/material"
-import useStockCall from "../hooks/useStockCall"
-import { btnStyle, flex } from "../styles/globalStyle"
+import * as React from "react";
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardMedia from "@mui/material/CardMedia";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import EditIcon from "@mui/icons-material/Edit";
+import { CardHeader } from "@mui/material";
+import useStockCall from "../hooks/useStockCall";
+import { btnStyle, flex } from "../styles/globalStyle";
 
 const BrandCard = ({ brand, setOpen, setInfo }) => {
-  const { deleteStockData } = useStockCall()
+  const { deleteStockData } = useStockCall();
 
   return (
     <Card
@@ -35,8 +35,8 @@ const BrandCard = ({ brand, setOpen, setInfo }) => {
         <EditIcon
           sx={btnStyle}
           onClick={() => {
-            setInfo(brand)
-            setOpen(true)
+            setInfo(brand);
+            setOpen(true);
           }}
         />
         <DeleteOutlineIcon
@@ -45,7 +45,7 @@ const BrandCard = ({ brand, setOpen, setInfo }) => {
         />
       </CardActions>
     </Card>
-  )
-}
+  );
+};
 
-export default BrandCard
+export default BrandCard;
